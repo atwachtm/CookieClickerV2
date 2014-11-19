@@ -222,6 +222,11 @@ class Cookieclicker(unittest.TestCase):
                     ach_count += 1
             except (StaleElementReferenceException, NoSuchElementException):
                 print "Caught stale element--skippin'!"
+            milkCookie = driver.find_element_by_xpath("//div[@id='menu']/div[5]/div[4]/div[125]")
+            if 'enabled' in milkCookie.get_attribute('class'):
+                pass
+            elif ach_count >= 25:
+                self.Dunker()
 
     """def handler(signum, frame):
         menu_save = self.driver.find_element_by_id('prefsButton')
@@ -233,6 +238,15 @@ class Cookieclicker(unittest.TestCase):
             menu_save.click()
         self.driver.find_element_by_id("promptOption0").click()
         raise KeyboardInterrupt"""
+    def Dunker(self):
+        self.driver.set_window_size(1400, 260)
+        timer = 0
+        while timer < 40:
+            self.driver.find_element_by_id("bigCookie").click()
+            timer += 1
+            print timer
+        if timer == 40:
+            self.driver.set_window_size(1400, 882)
 
     def hover(self):
         driver = self.driver
