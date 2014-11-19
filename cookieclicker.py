@@ -138,6 +138,14 @@ class Cookieclicker(unittest.TestCase):
             ach_list2 = ach_string2.split('/')
             ach_count = int(ach_list2[0])
             print str(ach_count) + " achievements have already been unlocked"
+            #Selling a Grandma achievement
+            grandmaSold = driver.find_element_by_xpath("//div[@id='menu']/div[5]/div[4]/div[42]")
+            if 'enabled' in grandmaSold.get_attribute('class'):
+                pass
+            else:
+                self.hover()
+                grandma_count1 -= 1
+                product_count -= 1
         click_count = 0
         cursor_max = 10
         grandma_max = 10
@@ -198,17 +206,6 @@ class Cookieclicker(unittest.TestCase):
                 cursor_max = 400
                 grandma_max = 250
                 other_max = 200
-            """
-            #Selling
-            if grandma_count1 == 11:
-                grandma_count1 -= 1
-                product_count -= 1
-                hover = ActionChains(self).move_to_element(product_button1)
-                hover.perform()
-                if self.is_element_present(By.ID, 'buttonSell-1'):
-                    driver.find_elements_by_id('buttonSell-1').click()
-                    print "Grandma is out of business"
-                    """
             #Buying upgrades
             if self.is_element_present(By.XPATH, "//div[@id='upgrades']/div[contains(@class, 'enabled')]"):
                 print "Checking for Upgrades... "
@@ -237,6 +234,13 @@ class Cookieclicker(unittest.TestCase):
         self.driver.find_element_by_id("promptOption0").click()
         raise KeyboardInterrupt"""
 
+    def hover(self):
+        driver = self.driver
+        element = driver.find_element_by_id("product1")
+        hov = ActionChains(driver).move_to_element(element)
+        hov.perform()
+        self.driver.find_element_by_id("buttonSell-1").click()
+
     def Export_save(self):
         menu_save = self.driver.find_element_by_id('prefsButton')
         menu_save.click()
@@ -246,7 +250,7 @@ class Cookieclicker(unittest.TestCase):
             save_data.write(str(export_code))
             menu_save.click()
             self.driver.find_element_by_id("promptOption0").click()
-        print "An export occurred but may not be what you wanted, hur hur hur!"
+        print "Your progress is being saved. Please do not close the window."
 
     def Import_save(self):
         print "Importing data. Please Wait..."
